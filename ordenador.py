@@ -11,7 +11,10 @@ elemento_2 = None
 tamanho = len(trilha_geral)
 i = 0
 arquivo = 1
-contagem_prova = 0
+verificador_1 = 0
+verificador_2 = 0
+primeiros_itens = []
+trilhas_globais = []
 
 while i < tamanho:
     trilha_ordenada = []
@@ -38,12 +41,38 @@ while i < tamanho:
             i=0
         else:
             i+=1
+    primeiros_itens.append(trilha_ordenada.pop(0))
     total = len(trilha_ordenada)
-    contagem_prova += total
-    f = open(f'arquivo_{arquivo}',"w")
-    for identificador in trilha_ordenada:
-        f.writelines(f'{identificador}\n')
+    trilhas_globais.append(trilha_ordenada)
+    verificador_1 += total
     i=0
-    arquivo+=1
-print(f'Termino do processamento, contagem final {contagem_prova}')
+print('*****************************************')
+print(f'Termino do processamento, contagem final {verificador_1}')
+print('*****************************************')
+print(f'Verificar processamento dos itens abaixo')
+print('*****************************************')
+print(primeiros_itens)
+print('*****************************************')
 
+k = 0
+maior_trilha = 0
+
+for trilha in trilhas_globais:
+    tamanho_trilha = len(trilha)
+    if tamanho_trilha > maior_trilha:
+        maior_trilha = tamanho_trilha
+
+while k < maior_trilha:
+    f = open(f'arquivo_{arquivo}',"w")
+    for trilha in trilhas_globais:
+        try:
+            identificador = trilha[k]
+            f.writelines(f'{identificador}\n')
+            verificador_2 += 1
+        except IndexError:
+            continue
+    arquivo+=1
+    k+=1
+
+print(f'Termino geracao arquivos, total {verificador_2}')
+print('*****************************************')
